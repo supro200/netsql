@@ -1,0 +1,51 @@
+[
+    {
+    "command":  "show interface",
+    "template": "templates/cisco_ios_show_interfaces.template",
+    "headers": ["Interface", "Link_Status", "Protocol_Status", "Hardware_Type", "Address", "Bia", "Description",
+                          "Ip_Address", "Mtu", "Duplex", "Speed", "Bandwidth", "Delay", "Encapsulation", "Last_Input",
+                          "Last_Output", "Last_Output_Hang", "Queue_Strategy", "Input_Rate", "Output_Rate",
+                          "Input_Packets", "Output_Packets", "Input_Errors", "Output_Errors"]
+   },
+   {
+    "command":  "show interface description",
+    "template":  "templates/cisco_ios_show_interfaces_description.template",
+    "headers": ["Interface", "Status", "Protocol", "Description"]
+   },
+   {
+    "command":  "show interface status",
+    "template": "templates/cisco_ios_show_interfaces_status.template",
+    "headers": ["Interface", "Name", "Status", "Vlan", "Duplex", "Speed", "Type"]
+   },
+     {
+    "command":  "show mac address-table",
+    "template": "templates/cisco_ios_show_mac-address-table.template",
+    "headers": ["MAC", "Type", "Vlan", "Interface"]
+   },
+     {
+    "command": "show ip arp",
+    "template": "templates/cisco_ios_show_ip_arp.template",
+    "headers": ["Protocol", "Ip_Address", "Age", "MAC", "Type", "Interface"]
+   },
+     {
+    "command":  "show cdp neighbors detail",
+    "template": "templates/cisco_ios_show_cdp_neighbors_detail.template",
+    "headers": ["Host", "Management_ip", "Platform", "Remote_Port", "Local_port", "Software_version",
+                        "Capabilities"]
+   },
+     {
+    "command":  "show vlan",
+    "template": "templates/cisco_ios_show_vlan.template",
+    "headers": ["Vlan", "Name", "Status", "Interface"]
+   },
+  {
+    "command":  "show ip interface brief",
+    "template": "templates/cisco_ios_show_ip_interface_brief.template",
+    "headers": ["Intf", "Ipaddr", "Status", "Proto"]
+   },
+   {
+    "command":  "show ip route",
+    "template": "templates/cisco_ios_show_ip_route.template",
+    "headers": ["protocol", "type", "network", "mask", "distance", "metric", "nexthop_ip", "nexthop_if", "uptime"]
+   }
+]

@@ -1,0 +1,73 @@
+[
+  {
+    "data_source_name": "interfaces",
+    "commands": [
+      "show interface status",
+      "show interface"
+    ],
+    "common_column": "Interface",
+    "report_file_name": "interfaces_report",
+    "process_dataframes": true,
+    "join_dataframes": true
+  },
+  {
+    "data_source_name": "addresses",
+    "commands": [
+      "show ip arp",
+      "show mac address-table"
+    ],
+    "common_column": "MAC",
+    "report_file_name": "addresses_report",
+    "process_dataframes": true,
+    "join_dataframes": true
+  },
+
+  {
+    "data_source_name": "mac-addresses",
+    "commands": ["show mac address-table"],
+    "common_column": "MAC",
+    "report_file_name": "mac-addresses_report",
+    "process_dataframes": true,
+    "join_dataframes": false
+  },
+   {
+    "data_source_name": "config",
+    "commands": ["show running-config"],
+    "common_column": "MAC",
+    "report_file_name": "running-config_report",
+    "process_dataframes": false,
+    "join_dataframes": false
+  },
+  {
+    "data_source_name": "routes",
+    "commands": ["show ip route"],
+    "common_column": "nexthop_if",
+    "report_file_name": "show-ip-route_report",
+    "process_dataframes": true,
+    "join_dataframes": false
+  },
+  {
+    "data_source_name": "neighbours",
+    "commands": ["show cdp neighbors detail"],
+    "common_column": "Management_ip",
+    "report_file_name": "show-cdp_neighbors_report",
+    "process_dataframes": true,
+    "join_dataframes": false
+  },
+  {
+    "data_source_name": "vlans",
+    "commands": ["show vlan"],
+    "common_column": "Vlan",
+    "report_file_name": "show-ip-route_report",
+    "process_dataframes": true,
+    "join_dataframes": false
+  },
+  {
+    "data_source_name": "ip_interface",
+    "commands": ["show ip interface brief"],
+    "common_column": "Intf",
+    "report_file_name": "show-ip-interface_report",
+    "process_dataframes": true,
+    "join_dataframes": false
+  }
+]

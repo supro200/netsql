@@ -4,7 +4,7 @@ This script allows to perform SQL-like queries on a single or group of networks 
 ```
 select Interface,Status,Link_Status,Last_Input,Vlan,Description from interfaces where Link_Status = down and Vlan = 100
 ```
-Using this tool you can query your network as it was a SQL table, and, for example, answer these questions:
+You can query your network as it was a SQL table, and, for example, answer these questions:
 
 * Where is this MAC address in my network?
 * How many switch ports are in use, how many ports never been used? 

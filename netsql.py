@@ -1,6 +1,6 @@
 """
 NetSQL is a network query tool which helps to collect and filter data about your network.
-Requires access to netowrk devices, but also can process raw command output.
+Requires access to network devices, but also can process raw command output.
 """
 from __future__ import print_function, unicode_literals
 

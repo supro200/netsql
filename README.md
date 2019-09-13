@@ -26,15 +26,21 @@ You can easily add your own Data Source and start querying it.
 
 It is recommended to build a Python 3 virtual environment. 
 Details on how to set one up can be found [here](https://docs.python.org/3/library/venv.html). 
-Once your virtual environment is setup and activated, install NetSQL:
- 
+
+If you use a Windows PC, follow these steps:
+1. Download and install [python 3](https://www.python.org/downloads/)
+2. Setup virtual environment for NetSQL
+3. Activate it
+4. Download NetSQL source code
+5. Install requirements
+6. Start querying your network or use -h for help
 ```
-python3 -m pip install --upgrade pip
-python3 -m pip install --upgrade git+https://github.com/supro200/netsql.git
-```
-This is TBC:
-```
-$ pip install -r requirements.txt
+python -m venv <path>
+<path>\Scripts\activate.bat
+git clone https://github.com/supro200/netsql.git
+cd netsql
+pip install -r requirements.txt
+python netsql.py -h
 ```
 
 ## How it works:

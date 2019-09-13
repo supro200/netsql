@@ -10,6 +10,17 @@
     "process_dataframes": true,
     "join_dataframes": true
   },
+    {
+    "data_source_name": "switchports",
+    "commands": [
+      "show interfaces switchport",
+      "show interface"
+    ],
+    "common_column": "Interface",
+    "report_file_name": "switchports_report",
+    "process_dataframes": true,
+    "join_dataframes": true
+  },
   {
     "data_source_name": "addresses",
     "commands": [

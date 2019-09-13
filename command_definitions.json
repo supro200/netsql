@@ -12,6 +12,11 @@
     "template":  "templates/cisco_ios_show_interfaces_description.template",
     "headers": ["Interface", "Status", "Protocol", "Description"]
    },
+     {
+    "command":  "show interfaces switchport",
+    "template":  "templates/cisco_ios_show_interfaces_switchport.template",
+    "headers": ["Interface", "Switchport", "Switchport_monitor","Switchport_negotiation","Mode", "Access_Vlan", "Native_Vlan", "Trunking_Vlans"]
+   },
    {
     "command":  "show interface status",
     "template": "templates/cisco_ios_show_interfaces_status.template",

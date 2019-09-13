@@ -12,9 +12,10 @@ You can query your network as it was a SQL table, and, for example, answer these
 * What VLANs and IP addresses are configured and active?
 * How many IP Phones do we have?
 
-Simple example:
+Simple examples :
 ```
- python netsql.py --query="select * from interfaces" --source 10.23.235.3 --user aupuser3
+python netsql.py --query="select * from interfaces" --source 10.23.235.3 --user aupuser3
+python netsql.py -q="select Interface,Description,Mode,Access_Vlan,Native_Vlan,Link_Status,Protocol_Status from switchports" -u aupuser3 -s 10.30.3.4 -html
 ```
 The same outcome can be achieved using other tools, such as Splunk, but this script provides a lightweight alternative.
 
@@ -76,7 +77,7 @@ Required:
 
 Optional:
 
-> *--no-connect* - Run without connecting to network devices, processes the command output already collected.
+> *--no-connect*, *-nc* - Run without connecting to network devices, processes the command output already collected.
 >                This is useful after you run a query, already got output, and then need to query on different fields or conditions; or don't have access to network devices.
 >                Considerably improves query processing time, as it simply processes text files.
 >
@@ -84,7 +85,7 @@ Optional:
 >
 >  *--screen-lines*  - Number of lines printed to screen. Full output is always printed to CSV files. Default is 10.
 >
->  *--html-output*   - Prints report to HTML. CSV reports are always generated. Turned off by default
+>  *--html-output*, *-html*   - Prints report to HTML. CSV reports are always generated. Turned off by default
 
 ### IP Address Sources
 

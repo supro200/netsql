@@ -89,7 +89,7 @@ def parse_args(args=sys.argv[1:]):
                           required=True,
                           )
     # Optional arguments
-    optional.add_argument("--no-connect",
+    optional.add_argument("--no-connect","-nc",
                           default=False,
                           action="store_true",
                           help="Run without connecting to network devices, uses the output previously collected. Impoves query processing speed")
@@ -103,7 +103,7 @@ def parse_args(args=sys.argv[1:]):
                           type=int,
                           required=False,
                           help="Number of lines to output for each device")
-    optional.add_argument("--html-output",
+    optional.add_argument("--html-output", "-html",
                           default=False,
                           action="store_true",
                           help="Prints report to HTML. CVS reports are always generated")

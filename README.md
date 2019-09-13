@@ -77,14 +77,14 @@ Required:
 Optional:
 
 > *--no-connect* - Run without connecting to network devices, processes the command output already collected.
->                This is useful when you run a command and then need to query on different fields or conditions, or don't have access to network devices.
+>                This is useful after you run a query, already got output, and then need to query on different fields or conditions; or don't have access to network devices.
 >                Considerably improves query processing time, as it simply processes text files.
 >
->  *--screen-output* - Prints report to screen. CVS reports are always generated. Turned on by default.
+>  *--screen-output* - Prints report to screen. CSV reports are always generated. Turned on by default.
 >
 >  *--screen-lines*  - Number of lines printed to screen. Full output is always printed to CSV files. Default is 10.
 >
->  *--html-output*   - Prints report to HTML. CVS reports are always generated. Turned off by default
+>  *--html-output*   - Prints report to HTML. CSV reports are always generated. Turned off by default
 
 ### IP Address Sources
 
@@ -99,7 +99,7 @@ or with =
 --source=10.23.235.3
 ```
 
-In most cases a query on multiple devices is needed, so these devices IP addresses are defined in a text file.
+In most cases a query on multiple devices is needed, so these devices' IP addresses should be defined in a text file.
 The file format is arbitrary, the script recognises IP addresses automatically, as long as they in a separate line.
 All other lines are ignored, but for better readability it is recommended to comment them with # 
 
@@ -126,11 +126,11 @@ It is recommended to create a separate directory for source files, just for conv
 
 ### Username
 
-Required in --user CLI option
+Required in *--user* CLI option
 
 Password should be entered manually each time the script runs.
 
-**Note** with **--no-connect** option, the script doesn't actually connect to network devices, so username and password can be anything.
+**Note** with *--no-connect* option, the script doesn't actually connect to network devices, so username and password can be anything.
 
 ## Queries
 
@@ -138,7 +138,7 @@ The query should be in the following format:
 ```
 select <fields> from <data_source> where <conditions>
 ```
-*data_source*, *fields* and *conditions* are described below, following by examples
+*data_source*, *fields* and *conditions* are described below, following by examples.
 
 #### Data Sources
 
@@ -178,9 +178,9 @@ You also need to define commands, so you can include fields and conditions in yo
 
 The actual commands to run and associated options are defined in **command_definitions.json** file
 
-To add a new command, copy a template from here:
-https://github.com/networktocode/ntc-templates/tree/master/templates
-or simply create a new file in *templates/* directory and copy-paste text file content from NTC template.
+To add a new command, copy a template from [here](
+https://github.com/networktocode/ntc-templates/tree/master/templates)
+or simply create a new file in **templates/** directory and copy-paste text file content from NTC template.
 
 Use NTC Value fields as CSV headers, for example:
 
@@ -207,7 +207,7 @@ In most cases, however, you may want to define conditions with **where** clause:
 ```
 select <fields> from <data_source> where <conditions>
 ```
-There can be a single conditions, for example:
+There can be a single condition, for example:
 ```
 where Vlan = 80 
 where MAC=b19f
@@ -217,7 +217,7 @@ Or multiple conditions separated by keyword **and**:
 where Last_Input = never and Vlan = 80 and Description = Wireless
 ```
 Note the **=** sign matches a substing, so Vlan = 80 will return Vlans 180, 280, 800, etc.
-See Limitations section.
+See [Limitations](#limitations) section.
 
 #### Examples 
 
@@ -247,7 +247,7 @@ Add a condition to the previous example and locate a MAC address of a connected 
 ```
 python netsql.py --query="select Interface, MAC from addresses where MAC=b19f" --source 111_bourke.st.txt --screen-output --user aupuser3 --no-connect --html-output
 ```
-In many cases if you need to query a device second time, and there is collected output already in directories, use --no-connect option, so the script will not connect to the actual devices and process the existing output
+In many cases if you need to query a device second time, and there is collected output already in directories, use *--no-connect option*, so the script will not connect to the actual devices and process the existing output
 ```
 python netsql.py --query="select * from interfaces where Last_Input = never and Vlan = 80" --source cleveland_st.txt --user aupuser3 --screen-output --no-connect
 ```
@@ -298,9 +298,9 @@ python netsql.py --query="select * from ip_int where Ipaddr = 10" --source devic
 
 ### How to create a new data source to query it
 
-1. Create Data Source by modifying **data_source_definitions.json**, associate the Data Source to device commands
+1. [Create Data Source](#data-sources) by modifying **data_source_definitions.json**, associate the Data Source to device commands
 2. Put the required NTC template into **templates/** directory
-3. Edit **command_definitions.json** , associate the command with the template
+3. Edit **command_definitions.json**, [associate](#commands) the command with the template
 4. You can start querying your data source
 
 #### Limitations
@@ -312,5 +312,5 @@ There are more limitations than features :) but the most notable (and being work
 
 This work is in progress :-)
 
-Any feedback, contributions, and requests are very much appreciated, send it to supro200@gmail.com
+Any feedback, contributions, and requests are very much appreciated, send them to supro200@gmail.com
 

@@ -32,7 +32,6 @@
     "process_dataframes": true,
     "join_dataframes": true
   },
-
   {
     "data_source_name": "mac-addresses",
     "commands": ["show mac address-table"],
@@ -74,7 +73,7 @@
     "join_dataframes": false
   },
   {
-    "data_source_name": "ip_interface",
+    "data_source_name": "ip-interfaces",
     "commands": ["show ip interface brief"],
     "common_column": "Intf",
     "report_file_name": "show-ip-interface_report",

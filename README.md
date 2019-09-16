@@ -71,7 +71,7 @@ Required:
 
 > *'-q', '--query'*    - SQL-formatted query, see examples below
 >
-> *'-s', '--source'*  -  Source file or a single IP addresses to process, for example:
+> *'-s', '--source'*  -  Source file or a single IP addresses to process
 >
 > *'-u', '--user'*    - Username to connect to network devices"
 
@@ -242,7 +242,7 @@ python netsql.py --query="select * from routes" --source device_ip_addresses.txt
 ```
 Get all MAC addresses from L2 switches
 ```
-python netsql.py --query="select * from mac_addresses" --source device_ip_addresses.txt --screen-output --user aupuser3 --html-output
+python netsql.py --query="select * from mac-addresses" --source device_ip_addresses.txt --screen-output --user aupuser3 --html-output
 ```
 Add a condition to the previous example and locate a MAC address of a connected device in your building or campus:
 ```
@@ -290,11 +290,11 @@ python netsql.py --query="select * from vlans where Status = active " --source d
 ```
 Get a list of configured L3 interfaces from a device
 ```
-python netsql.py --query="select * from ip_int" --source device_ip_addresses.txt  --user aupuser3 --screen-output
+python netsql.py --query="select * from ip_interfaces" --source device_ip_addresses.txt  --user aupuser3 --screen-output
 ```
 Get a list of configured L3 interfaces from a device with IP address containing 10 (so excluding unassigned)
 ```
-python netsql.py --query="select * from ip_int where Ipaddr = 10" --source device_ip_addresses.txt  --user aupuser3 --screen-output --no-connect
+python netsql.py --query="select * from ip_interfaces where Ipaddr = 10" --source device_ip_addresses.txt  --user aupuser3 --screen-output --no-connect
 ```
 
 ### How to create a new data source to query it

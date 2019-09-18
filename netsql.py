@@ -196,7 +196,6 @@ def command_analysis(text):
                     val = element.split("=")
                     condition_dic["cond_field"] = val[0].strip()
 
-                    print("-------------", val[0].strip())
                     conditions_list.append(val[0].strip())
 
                     if "or" in val[1]:

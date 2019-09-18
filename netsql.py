@@ -11,6 +11,8 @@ import getpass
 import ipaddress
 import argparse
 import sys
+
+import numpy
 import textfsm
 import os
 import pandas as pd
@@ -32,6 +34,10 @@ class CustomParser(argparse.ArgumentParser):
     Overrides default CLI parser's print_help and error methods
     """
     def print_help(self):
+
+        # Print default help from argparse.ArgumentParser class
+        super().print_help()
+        # print our help messages
         print(
             "\n Usage examples:"
             + '\n         python netsql.py --query="select * from interfaces where Last_Input = never" --source 10.74.41.73 --user aupuser3 --screen-output --html-output'
@@ -158,6 +164,7 @@ def command_analysis(text):
     fields = []
     source = ""
     conditions = []
+    conditions_list = []
     result = {}
     command = text.split()
 
@@ -189,6 +196,9 @@ def command_analysis(text):
                     val = element.split("=")
                     condition_dic["cond_field"] = val[0].strip()
 
+                    print("-------------", val[0].strip())
+                    conditions_list.append(val[0].strip())
+
                     if "or" in val[1]:
                         # if there is an 'or' in the request
                         tempvalue = ("").join(val[1])
@@ -206,9 +216,22 @@ def command_analysis(text):
     else:
         print("Invalid Format or Command!")
 
+    # if * is in list, return all fields anyway, so ignore all other selected fields
+    if "*" in fields:
+        fields[0] = "*"
+        del fields[1:]
+    else:
+        # add 'conditions' fields to the list of fields selected
+        fields.extend(conditions_list)
+        # remove duplicates
+        fields_no_duplicates = []
+        [fields_no_duplicates.append(item) for item in fields if item not in fields_no_duplicates]
+        fields = fields_no_duplicates
+
     result["fields"] = fields[0:]
     result["source"] = source
     result["conditions"] = conditions[0:]
+
     return result
 
 
@@ -413,15 +436,20 @@ def process_csv_files(
     Writes raw output to a report file
     """
 
+    # If "join_dataframes": true   is source_definition.json
     if join_dataframes:
         pd1 = pd.read_csv(file1)
         pd2 = pd.read_csv(file2)
 
         if fields_to_select[0] == "*":
-            result_pd = pd.merge(pd1, pd2, on=common_column)
+            #result_pd = pd.merge(pd1, pd2, on=common_column)
+            result_pd = pd.merge(pd1, pd2, left_on=common_column[0], right_on=common_column[1])
         else:
-            result_pd = pd.merge(pd1, pd2, on=common_column).filter(fields_to_select)
+            result_pd = pd.merge(pd1, pd2, left_on=common_column[0], right_on=common_column[1]).filter(fields_to_select)
+            #result_pd = pd.merge(pd1, pd2, left_on=common_column[0], right_on=common_column[1])
+            #result_pd = pd.merge(pd1, pd2, on=common_column).filter(fields_to_select)
     else:
+        # If "join_dataframes": false   is source_definition.json
         pd1 = pd.read_csv(file1)
         if fields_to_select[0] == "*":
             result_pd = pd1
@@ -479,7 +507,7 @@ def main():
             commands = item["commands"].copy()
             process_dataframes = item["process_dataframes"]
             join_dataframes = item["join_dataframes"]
-            common_column = item["common_column"]
+            common_column = item["common_columns"].copy()
             report_file_name = item["report_file_name"]
 
     # Got empty commands list at previous step, nothing to run
@@ -619,8 +647,13 @@ def main():
         total_number_of_devices, "devices",
     )
 
-    with open(get_file_path("", report_file_name, "report") + ".html", "w") as f:
-        f.write(html_string)
+    if options.html_output:
+        with open(get_file_path("", report_file_name, "report") + ".html", "w") as f:
+            f.write(html_string)
+        print(
+            "HTML Report saved as:", os.path.dirname(os.path.realpath(__file__)) + "\\" +
+            get_file_path("", report_file_name, "report") + ".html",
+        )
 
 
 if __name__ == "__main__":

@@ -300,9 +300,13 @@ python netsql.py --query="select * from ip_interfaces where Ipaddr = 10" --sourc
 ### How to create a new data source to query it
 
 1. [Create Data Source](#data-sources) by modifying **data_source_definitions.json**, associate the Data Source to device commands
-2. Put the required NTC template into **templates/** directory
-3. Edit **command_definitions.json**, [associate](#commands) the command with the template
-4. You can start querying your data source
+2. Check the new Datasource is added by running the script with -h option:
+```
+python netsql.py -h
+```
+3. Put the required NTC template into **templates/** directory
+4. Edit **command_definitions.json**, [associate](#commands) the command with the template
+5. You can start querying your data source
 
 #### Limitations
 There are more limitations than features :) but the most notable (and being worked on) ones are:

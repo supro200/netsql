@@ -332,7 +332,6 @@ def get_file_path(host, command, file_type):
 
 # -------------------------------------------------------------------------------------------
 
-
 def normalise_file(file_name):
     """
     Replaces strings to match different command output, for example, changes all interface names from GigabitEnternet to Gi
@@ -341,14 +340,51 @@ def normalise_file(file_name):
     :param file_name: File Name to load and replace strings
     :return: none
     """
+    # Issue - when regexes are stored as strings, they are treated as special characters
+    dict = {
+        "(GigabitEthernet)(\d{1})\/(\d{1})\/(\d{1,2})": "Gi\2/\3/\4",
+        "(Te)(\d{1})\/(\d{1})\/(\d{1,2})": "TenGi\2/\3/\4"
+    }
+
     with open(file_name, "r+") as f:
         content = f.read()
+        print(content)
+
+        # needs to be fixed to read from dict
+        # for key in dict:
+        # print(key)
+        # print(dict[key])
+        # subs = "r"+ "\"" +(dict[key])+ "\""
+        # content_new = re.sub(
+        #     key,
+        #     #r dict[key],
+        #     subs,
+        #     text,
+        #     flags=re.M,
+        # )
+        # text = content_new
+
+        content_new = re.sub(
+            "(TenGigabitEthernet)(\d{1})\/(\d{1})\/(\d{1,2})",
+            r"TenGi\2/\3/\4",
+            content,
+            flags=re.M,
+        )
+        content = content_new
         content_new = re.sub(
             "(GigabitEthernet)(\d{1})\/(\d{1})\/(\d{1,2})",
             r"Gi\2/\3/\4",
             content,
             flags=re.M,
         )
+        content = content_new
+        content_new = re.sub(
+            "(Te)(\d{1})\/(\d{1})\/(\d{1,2})",
+            r"TenGi\2/\3/\4",
+            content,
+            flags=re.M,
+        )
+
         # rewriting file
         f.seek(0)
         f.truncate()
@@ -544,15 +580,14 @@ def main():
             with open(file) as f:
                 file_content = f.read().splitlines()
                 device_ip_addresses.extend(file_content)
-    print(device_ip_addresses)
+    #print(device_ip_addresses)
 
     # ask for user's password
     password = getpass.getpass(prompt="Password: ", stream=None)
 
     # analyse each line of the source file
     for line in device_ip_addresses:
-        print(line)
-        # try to convert line into IP address format
+         # try to convert line into IP address format
         try:
             # if ipaddress.ip_address call didn't fail, it's a valid IP, handle it
             ip_address = str(ipaddress.ip_address(line))

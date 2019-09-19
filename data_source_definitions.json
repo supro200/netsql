@@ -39,7 +39,23 @@
     ],
     "report_file_name": "mac-cdp-nei",
     "process_dataframes": true,
-    "join_dataframes": true
+    "join_dataframes": true,
+    "comment" : "Merges MAC address tables and CDP Neighbours outputs based on common port"
+  },
+  {
+    "data_source_name": "cdp-nei-port",
+    "commands": [
+      "show cdp neighbors detail",
+      "show interface description"
+    ],
+    "common_columns": [
+      "Local_port",
+      "Interface"
+    ],
+    "report_file_name": "mac-cdp-nei",
+    "process_dataframes": true,
+    "join_dataframes": true,
+    "comment" : "Merges CDP Neighbours outputs and port description"
   },
   {
     "data_source_name": "addresses",

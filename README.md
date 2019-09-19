@@ -24,8 +24,8 @@ It can connect to a group of devices, or process text files without connecting t
 You can easily add your own Data Source and start querying it.
 
 - [NetSQL](#netsql)
-  * [Installation](#installation-)
-  * [How it works](#how-it-works-)
+  * [Installation](#installation)
+  * [How it works](#how-it-works)
   * [How to use it](#how-to-use-it)
     + [IP Address Sources](#ip-address-sources)
     + [Username](#username)

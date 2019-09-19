@@ -24,8 +24,8 @@ It can connect to a group of devices, or process text files without connecting t
 You can easily add your own Data Source and start querying it.
 
 - [NetSQL](#netsql)
-  * [Installation:](#installation-)
-  * [How it works:](#how-it-works-)
+  * [Installation](#installation-)
+  * [How it works](#how-it-works-)
   * [How to use it](#how-to-use-it)
     + [IP Address Sources](#ip-address-sources)
     + [Username](#username)
@@ -37,7 +37,7 @@ You can easily add your own Data Source and start querying it.
   * [How to create a new data source to query it](#how-to-create-a-new-data-source-to-query-it)
   * [Limitations](#limitations)
   
-## Installation:
+## Installation
 
 It is recommended to build a Python 3 virtual environment. 
 Details on how to set one up can be found [here](https://docs.python.org/3/library/venv.html). 
@@ -58,7 +58,7 @@ pip install -r requirements.txt
 python netsql.py -h
 ```
 
-## How it works:
+## How it works
 
 The script connects to network devices using Netmiko, gathers command output, stores into text files, converts them to CSV using TextFSM and NTC templates, and then processes as Pandas dataframes.
 The results are device-command specific CSV files, and optionally HTML report.

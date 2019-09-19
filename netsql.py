@@ -348,7 +348,6 @@ def normalise_file(file_name):
 
     with open(file_name, "r+") as f:
         content = f.read()
-        print(content)
 
         # needs to be fixed to read from dict
         # for key in dict:

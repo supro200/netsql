@@ -1,6 +1,6 @@
 # NetSQL
 
-This script allows to perform SQL-like queries on a single device or group of networks devices, like this:
+This tool allows to perform SQL-like queries on a single device or group of networks devices, like this:
 ```
 select Interface,Last_Input,Vlan,Description,Link_Status from interfaces where Link_Status = down and Vlan = 100
 ```
@@ -26,7 +26,7 @@ You can easily add your own Data Source and start querying it.
 - [NetSQL](#netsql)
   * [Installation:](#installation-)
   * [How it works:](#how-it-works-)
-  * [How to use it:](#how-to-use-it-)
+  * [How to use it](#how-to-use-it)
     + [IP Address Sources](#ip-address-sources)
     + [Username](#username)
   * [Queries](#queries)
@@ -34,10 +34,9 @@ You can easily add your own Data Source and start querying it.
       - [Commands](#commands)
       - [Fields and Conditions](#fields-and-conditions)
       - [Examples](#examples)
-    + [How to create a new data source to query it](#how-to-create-a-new-data-source-to-query-it)
-      - [Limitations](#limitations)
-
-
+  * [How to create a new data source to query it](#how-to-create-a-new-data-source-to-query-it)
+  * [Limitations](#limitations)
+  
 ## Installation:
 
 It is recommended to build a Python 3 virtual environment. 
@@ -78,7 +77,7 @@ Possible data sources to query and their attributes are defined in **source_defi
 
 See below for more details.
 
-## How to use it:
+## How to use it
 
 Use the following CLI parameters:
 
@@ -327,7 +326,7 @@ Can be useful to check if Networke devices, Access points, Video or IoT devices 
 python netsql.py --query="select * from cdp-nei-port" --source source_files/queen_st.txt --user aupuser3 -html
 ```
 
-### How to create a new data source to query it
+## How to create a new data source to query it
 
 1. [Create Data Source](#data-sources) by modifying **data_source_definitions.json**, associate the Data Source to device commands
 2. Check the new Datasource is added by running the script with -h option:
@@ -338,7 +337,7 @@ python netsql.py -h
 4. Edit **command_definitions.json**, [associate](#commands) the command with the template
 5. You can start querying your data source
 
-#### Limitations
+## Limitations
 There are more limitations than features :) but the most notable (and being worked on) ones are:
 - Only Cisco IOS devices are supported so far
 - Only AND conditions, OR is coming

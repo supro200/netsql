@@ -103,6 +103,7 @@ or with =
 In most cases a query on multiple devices is needed, so these devices' IP addresses should be defined in a text file.
 The file format is arbitrary, the script recognises IP addresses automatically, as long as they in a separate line.
 All other lines are ignored, but for better readability it is recommended to comment them with # 
+You can specify multiple source files separated with comma
 
 ####Example:
  
@@ -121,6 +122,8 @@ All other lines are ignored, but for better readability it is recommended to com
 Use:
 ```
 --source distr_switches.txt
+or
+--source source_files/file_site1_switches.txt,source_files/file_site1_switches.txt
 ```
 
 It is recommended to create a separate directory for source files, just for convenience.
@@ -154,22 +157,25 @@ You can add a new Datasource to the JSON file, and start querying it.
 The Data source definition format:
 ```
   {
-    "data_source_name": "addresses",
+    "data_source_name": "addresses_to_cdp",
     "commands": [                               <<<  List of commands
-      "show ip arp",
-      "show mac address-table"
+      "show mac address-table",
+      "show cdp neighbors detail"
     ],
     "process_dataframes": true,                 <<< Whether to convert raw command output to CSV
                                                     In some cases you may want just to collect raw text output to process in other tools, such as Splunk or AWS Athena
     "join_dataframes": true,                    <<< Whether to join two command output, similar to Left Join in SQL Tables, only works if process_dataframes is True. 
-                                                     If there is a single command, this parameter is ignored
-    "common_column": "MAC",                     <<< Common field to join two Dataframes. If join_dataframes is False , this parameter is ignored
-    "report_file_name": "addresses_report"      <<< CSV File name
+                                                     If there is a single command, this parameter is ignored                     
+    "common_columns": [                        <<< Common field to join two Dataframes. If join_dataframes is False , this parameter is ignored
+      "Interface",                             <<< Field name from first command output with values matching seconds command output
+      "Local_port"                             <<< Field name from second command output with values matching first command output
+    ],
+    "report_file_name": "addresses_cdp_report"      <<< CSV File name
   }
 ```
 Change these parameters accordingly and paste this fragment into json file as a new entry.
 
-If you run the script with *-h* or *--help* option, the new Data Source will be shown.
+To test if Datasource is added successfully, run the script with *-h* or *--help* option, the new Data Source will be shown.
 ```
 python netsql.py -h
 ```

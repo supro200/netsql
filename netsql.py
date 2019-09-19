@@ -498,6 +498,7 @@ def main():
 
     # Parse query from CLI input and populate parameters for Dataframe merge
     query_processed = command_analysis(options.query)
+
     source = query_processed["source"]
 
     # Check if source in the query is defined and can be handled
@@ -534,17 +535,23 @@ def main():
         # single host
         device_ip_addresses.append(ip_address)
     except:
-        # if the CLI option source is not an IP address, treat as a source file
-        print("opening source file: ", options.source)
-        # reading source file with IP addresses
-        with open(options.source) as f:
-            device_ip_addresses = f.read().splitlines()
+        # if the CLI option source is not an IP address, treat as a source file or files
+        files = options.source.split(",")
+        device_ip_addresses = []
+        for file in files:
+            print("opening source file: ", file)
+            # read source file with IP addresses and add lines to the combined list
+            with open(file) as f:
+                file_content = f.read().splitlines()
+                device_ip_addresses.extend(file_content)
+    print(device_ip_addresses)
 
     # ask for user's password
     password = getpass.getpass(prompt="Password: ", stream=None)
 
     # analyse each line of the source file
     for line in device_ip_addresses:
+        print(line)
         # try to convert line into IP address format
         try:
             # if ipaddress.ip_address call didn't fail, it's a valid IP, handle it
@@ -636,6 +643,7 @@ def main():
                     html_string = (
                         html_string
                         + "\n<b>" + device["host"] + "</b>\n"
+                        + "\nReturned <b>" + str(count_row) + "</b> records\n"
                         + df.to_html().replace(
                             "<th>", '<th style = "background-color: #bde9ba">'
                         )

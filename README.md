@@ -23,6 +23,21 @@ It can connect to a group of devices, or process text files without connecting t
 
 You can easily add your own Data Source and start querying it.
 
+- [NetSQL](#netsql)
+  * [Installation:](#installation-)
+  * [How it works:](#how-it-works-)
+  * [How to use it:](#how-to-use-it-)
+    + [IP Address Sources](#ip-address-sources)
+    + [Username](#username)
+  * [Queries](#queries)
+      - [Data Sources](#data-sources)
+      - [Commands](#commands)
+      - [Fields and Conditions](#fields-and-conditions)
+      - [Examples](#examples)
+    + [How to create a new data source to query it](#how-to-create-a-new-data-source-to-query-it)
+      - [Limitations](#limitations)
+
+
 ## Installation:
 
 It is recommended to build a Python 3 virtual environment. 
@@ -302,6 +317,15 @@ Get a list of configured L3 interfaces from a device with IP address containing 
 ```
 python netsql.py --query="select * from ip_interfaces where Ipaddr = 10" --source device_ip_addresses.txt  --user aupuser3 --screen-output --no-connect
 ```
+Find Cisco Access Points based on a fragment of MAC address, print CDP details:
+```
+python netsql.py --query="select * from mac-cdp-nei where MAC=bb and Platform = AIR" -nc --source source_files/queen_st.txt,source_files/cleveland_st.txt --user aupuser3 -html
+```
+Prints CDP neighbour details for the device connected to a port, and the description of the port.
+Can be useful to check if Networke devices, Access points, Video or IoT devices are connected to correct ports.
+```
+python netsql.py --query="select * from cdp-nei-port" --source source_files/queen_st.txt --user aupuser3 -html
+```
 
 ### How to create a new data source to query it
 
@@ -319,7 +343,6 @@ There are more limitations than features :) but the most notable (and being work
 - Only Cisco IOS devices are supported so far
 - Only AND conditions, OR is coming
 - **=** matches a substring, not an exact match 
-- Basic HTML formatting
 
 This work is in progress :-)
 

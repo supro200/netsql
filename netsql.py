@@ -237,7 +237,7 @@ def command_analysis(text):
 # -------------------------------------------------------------------------------------------
 
 
-def run_command_and_write_to_txt(commands, a_device, no_connect):
+def run_command_and_write_to_txt(commands, a_device, no_connect, get_metadata_items):
     """
     Executes IOS commands using Netmiko.
     Writes raw output to a report file.
@@ -287,6 +287,21 @@ def run_command_and_write_to_txt(commands, a_device, no_connect):
             with open(file_name, "w") as f:
                 # execute command on a device and write to a file
                 f.write(remote_conn.send_command_expect(command))
+
+        if get_metadata_items:
+            # Get device metadata - hostname and location
+            print("Writing metadata to file: ", file_name)
+            metadata_item = ""
+
+            for item in get_metadata_items.keys():
+                file_name = get_file_path(a_device["host"], "_metadata", "raw_output") + ".txt"
+                os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                metadata_item = metadata_item + item + ":" + remote_conn.send_command_expect(get_metadata_items[item]) + "\n"
+
+            with open(file_name, "w") as f:
+                # execute command on a device and write to a file
+                f.write(metadata_item)
+
         # sucessful command execution - return True
         return True
     # failure during command execution - return False
@@ -295,7 +310,6 @@ def run_command_and_write_to_txt(commands, a_device, no_connect):
 
 
 # -------------------------------------------------------------------------------------------
-
 
 def find_command(command, all_commands):
     """
@@ -605,8 +619,12 @@ def main():
         # device IP detected - increase Total device counter
         total_number_of_devices += 1
 
+
+        # Get device name and SNMP location, save to json file to use as device Metadata
+        get_metadata = {"hostname": "show run | i hostname", "location": "show run | i snmp-server location "}
+
         # Try to get command output from a device
-        if run_command_and_write_to_txt(commands, device, options.no_connect):
+        if run_command_and_write_to_txt(commands, device, options.no_connect, get_metadata):
             # Got some output from a device - increase Processed device counter and process the output in txt file
             number_of_processed_devices += 1
 
@@ -674,10 +692,23 @@ def main():
 
                 if options.html_output:
                     # output to HTML
+
+                    metadata_output_sting = ""
+                    with open(get_file_path(device["host"], "_metadata", "raw_output") + ".txt", "r") as content_file:
+                        raw_metadata = content_file.readlines()
+                        for line in raw_metadata:
+                            val = line.split(":")
+                            try:
+                                metadata_output_sting = metadata_output_sting + val[1].strip() + "<br>"
+                            except:
+                                # ignore any errors
+                                pass
+
                     html_string = (
                         html_string
-                        + "\n<b>" + device["host"] + "</b>\n"
-                        + "\nReturned <b>" + str(count_row) + "</b> records\n"
+                        + "<b><br>" + device["host"] + "</b><br>"
+                        + "" + metadata_output_sting + ""
+                        + "Returned <b>" + str(count_row) + "</b> records<br>"
                         + df.to_html().replace(
                             "<th>", '<th style = "background-color: #bde9ba">'
                         )

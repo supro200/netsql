@@ -4,7 +4,7 @@ This tool allows to perform SQL-like queries on a single device or group of netw
 ```
 select Interface,Last_Input,Vlan,Description,Link_Status from interfaces where Link_Status = down and Vlan = 100
 ```
-You can query your network as it was a SQL table, and, for example, answer these questions:
+You can query your network as it was a SQL database, and, for example, answer these questions:
 
 * Where is this MAC address in my network?
 * How many switch ports are in use, how many ports never been used? 

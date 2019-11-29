@@ -50,10 +50,10 @@ If you use a Windows PC, follow these steps:
 5. Install requirements
 6. Start querying your network or use -h for help
 ```
-python -m venv <path>
-<path>\Scripts\activate.bat
 git clone https://github.com/supro200/netsql.git
+python -m venv netsql
 cd netsql
+Scripts\activate.bat
 pip install -r requirements.txt
 python netsql.py -h
 ```

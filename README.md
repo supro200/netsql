@@ -1,3 +1,7 @@
+[![Python 3](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue)](https://www.python.org/downloads/)
+[![MIT license](https://img.shields.io/badge/License-MIT-green.svg)](https://lbesson.mit-license.org/)
+
+
 # NetSQL
 
 This tool allows to perform SQL-like queries on a single device or group of networks devices, like this:
@@ -17,7 +21,7 @@ Simple examples :
 python netsql.py --query="select * from interfaces" --source 10.23.235.3 --user aupuser3
 python netsql.py -q="select Interface,Description,Mode,Access_Vlan,Native_Vlan,Link_Status,Protocol_Status from switchports" -u aupuser3 -s 10.30.3.4 -html
 ```
-The same outcome can be achieved using other tools, such as Splunk, but this script provides a lightweight alternative.
+The same outcome can be achieved using other tools, such as Splunk, or AWS Athena, but this script provides a lightweight alternative.
 
 It can connect to a group of devices, or process text files without connecting to them.
 

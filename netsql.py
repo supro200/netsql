@@ -520,9 +520,17 @@ def process_csv_files(
 
 # -------------------------------------------------------------------------------------------
 
-# Placeholder for pytest
-def test1():
-    pass
+# placeholder for Pytest
+def test_case1():
+    assert True
+
+
+def test_case2():
+    assert True
+
+
+def test_case3():
+    assert True
     
 # -------------------------------------------------------------------------------------------
 def main():
